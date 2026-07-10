@@ -21,6 +21,7 @@ export function parseBracket(text) {
     const nameMatch = block.match(/(?<![un])identifiedDisplayName\s*=\s*\[=*\[([\s\S]*?)\]=*\]/);
     if (!nameMatch) continue;
     const name = nameMatch[1].trim();
+    if (!name) continue; // pula placeholders com identifiedDisplayName vazio (nao sao itens nomeados)
 
     const slotMatch = block.match(/slotCount\s*=\s*(\d+)/);
     const slots = slotMatch ? parseInt(slotMatch[1], 10) : 0;
@@ -49,6 +50,7 @@ export function parseQuoted(text) {
     const nameMatch = block.match(/(?<![un])identifiedDisplayName\s*=\s*"((?:[^"\\]|\\.)*)"/);
     if (!nameMatch) continue;
     const name = decodeLuaEscapes(nameMatch[1], 'utf-8').trim();
+    if (!name) continue; // pula placeholders com identifiedDisplayName vazio (nao sao itens nomeados)
 
     const slotMatch = block.match(/slotCount\s*=\s*(\d+)/);
     const slots = slotMatch ? parseInt(slotMatch[1], 10) : 0;

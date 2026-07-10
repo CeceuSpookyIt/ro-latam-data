@@ -28,6 +28,23 @@ test('parseBracket extrai nome, slots e descricao', () => {
   assert.equal(m.get(1101).slots, 4);
 });
 
+const BRACKET_EMPTY = `
+[9990] = {
+  identifiedDisplayName = [[]],
+  slotCount = 0
+},
+[9991] = {
+  identifiedDisplayName = [[Item Valido]],
+  slotCount = 0
+}
+`;
+
+test('parseBracket pula itens com nome vazio (placeholders)', () => {
+  const m = parseBracket(BRACKET_EMPTY);
+  assert.equal(m.has(9990), false);
+  assert.equal(m.get(9991).name, 'Item Valido');
+});
+
 const QUOTED = `
   [12345] = {
     identifiedDisplayName = "Item Novo",

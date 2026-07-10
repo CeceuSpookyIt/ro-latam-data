@@ -5,8 +5,11 @@ Fonte unica de nomes pt-BR do cliente RO LATAM, consumida pela calculadora
 
 ## Artefatos (`data/`)
 
-- `item.json`, `{ "<nameid>": { "name", "type", "slots" } }`. `type` distingue
-  carta (`6`) de enchant (`0`). Cobertura total dos itens nomeados.
+- `item.json`, `{ "<nameid>": { "name", "type", "slots" } }`. `type` = `6` marca
+  **carta**; `0` = qualquer outra coisa (arma, armadura, consumivel, enchant, ...).
+  NAO assuma `0 == enchant`. Para distinguir carta de enchant num slot de carta,
+  teste `type === 6` (carta) vs qualquer outro valor (enchant). Cobertura total dos
+  itens nomeados (placeholders sem nome sao omitidos).
 - `randomopt.json`, `{ "<optionId>": "<template com %d>" }`. `optionId` = ordinal
   do `enumvar` = `id` da option no pacote `0x0B39`. Frontend faz
   `template.replaceAll('%d', value).replaceAll('%%','%')`.
