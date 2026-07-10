@@ -15,7 +15,7 @@ export function parseBracket(text) {
   const starts = blockBounds(text);
   for (let i = 0; i < starts.length; i++) {
     const { id, index } = starts[i];
-    const end = i + 1 < starts.length ? starts[i + 1].index : index + 8000;
+    const end = i + 1 < starts.length ? starts[i + 1].index : text.length;
     const block = text.substring(index, end);
 
     const nameMatch = block.match(/(?<![un])identifiedDisplayName\s*=\s*\[=*\[([\s\S]*?)\]=*\]/);
@@ -43,7 +43,7 @@ export function parseQuoted(text) {
   const starts = blockBounds(text);
   for (let i = 0; i < starts.length; i++) {
     const { id, index } = starts[i];
-    const end = i + 1 < starts.length ? starts[i + 1].index : index + 8000;
+    const end = i + 1 < starts.length ? starts[i + 1].index : text.length;
     const block = text.substring(index, end);
 
     const nameMatch = block.match(/(?<![un])identifiedDisplayName\s*=\s*"((?:[^"\\]|\\.)*)"/);
