@@ -23,10 +23,10 @@ export function decodeLuaEscapes(s, enc) {
       else if (next === '"') { bytes.push(34); i++; }
       else { bytes.push(s.charCodeAt(i)); }
     } else {
-      // char comum: pode ser latin1 ja decodificado (>127) — emite o byte cru
+      // char comum: pode ser latin1 ja decodificado (>127), emite o byte cru
       const c = s.charCodeAt(i);
       if (c <= 0xff) bytes.push(c);
-      else { // char multibyte ja em JS string — reencoda em utf-8
+      else { // char multibyte ja em JS string, reencoda em utf-8
         for (const b of Buffer.from(s[i], 'utf-8')) bytes.push(b);
       }
     }
