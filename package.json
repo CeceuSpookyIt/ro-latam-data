@@ -1,0 +1,11 @@
+{
+  "name": "ro-latam-data",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Fonte unica de nomes pt-BR (itens + random options) do cliente RO LATAM",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "node --test"
+  }
+}
