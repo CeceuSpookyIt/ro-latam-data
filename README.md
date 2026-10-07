@@ -21,7 +21,7 @@ Pre-requisitos: cliente RO LATAM instalado, `java` no PATH.
 ```bash
 # opcional: se o cliente nao estiver em D:/Gravity/Ragnarok
 export RO_CLIENT_DIR="/caminho/para/Ragnarok"
-# opcional: overrides utf-8
+# opcional: usar um iteminfo_new ja descompilado em vez do System/iteminfo_new.lub
 export RO_ITEMINFO_NEW="/caminho/para/iteminfo_new_decompiled.lua"
 
 npm test          # roda os testes hermeticos dos parsers
@@ -30,7 +30,10 @@ git add data && git commit -m "data: regen <data>"
 git push
 ```
 
-Fontes: `System/itemInfo.lua` (latin1) + overrides; `data.grf` para
+Fontes: `System/itemInfo.lua` (latin1) + overrides do `System/iteminfo_new.lub`
+(descompilado pelo proprio build via `tools/unluac.jar`; sem ele o build para); item que o override novo nao
+nomeia mantem a entrada do `data/item.json` anterior (o cliente as vezes esvazia o
+nome de itens antigos, e o `itemInfo.lua` de 2022 traria coreano); `data.grf` para
 `enumvar.lub` + `addrandomoptionnametable_ptbr.lub` (decompilados via
 `tools/unluac.jar`).
 
