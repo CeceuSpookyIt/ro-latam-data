@@ -3,6 +3,7 @@ import { resolve, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { parseBracket, parseQuoted } from './parse-iteminfo.mjs';
 import { deriveType } from './item-type.mjs';
+import { keepPrevious } from './keep-previous.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const CLIENT = process.env.RO_CLIENT_DIR || 'D:/Gravity/Ragnarok';
@@ -15,19 +16,26 @@ const base = parseBracket(readFileSync(ITEMINFO, 'latin1'));
 console.log(`  ${base.size} itens`);
 
 const merged = new Map(base);
+const overrideIds = new Set();
 if (existsSync(OVERRIDES)) {
   console.log(`Lendo ${OVERRIDES} (utf-8, overrides)...`);
   const ov = parseQuoted(readFileSync(OVERRIDES, 'utf-8'));
-  for (const [id, v] of ov) merged.set(id, v); // override vence
+  for (const [id, v] of ov) { merged.set(id, v); overrideIds.add(id); } // override vence
   console.log(`  ${ov.size} overrides`);
 }
 
-const result = {};
+let result = {};
 let cards = 0;
 for (const [id, v] of merged) {
   const type = deriveType(v.descLines);
   if (type === 6) cards++;
   result[String(id)] = { name: v.name, type, slots: v.slots };
+}
+
+if (existsSync(OUT)) {
+  const prev = keepPrevious(result, JSON.parse(readFileSync(OUT, 'utf-8')), overrideIds);
+  result = prev.result;
+  console.log(`  ${prev.kept} itens mantidos do item.json anterior (sem nome no override novo)`);
 }
 
 mkdirSync(dirname(OUT), { recursive: true });

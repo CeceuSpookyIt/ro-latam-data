@@ -30,7 +30,9 @@ git add data && git commit -m "data: regen <data>"
 git push
 ```
 
-Fontes: `System/itemInfo.lua` (latin1) + overrides; `data.grf` para
+Fontes: `System/itemInfo.lua` (latin1) + overrides; item que o override novo nao
+nomeia mantem a entrada do `data/item.json` anterior (o cliente as vezes esvazia o
+nome de itens antigos, e o `itemInfo.lua` de 2022 traria coreano); `data.grf` para
 `enumvar.lub` + `addrandomoptionnametable_ptbr.lub` (decompilados via
 `tools/unluac.jar`).
 
