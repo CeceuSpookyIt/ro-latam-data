@@ -9,4 +9,6 @@ const run = (script) => {
 };
 run('build-items.mjs');
 run('build-randomopt.mjs');
-console.log('\nBuild completo. Verifique data/item.json e data/randomopt.json.');
+run('build-monster-names.mjs');
+run('build-monster-keys.mjs');
+console.log('\nBuild completo. Verifique data/item.json, data/randomopt.json, data/monster-names.json e data/monster-keys.json.');
